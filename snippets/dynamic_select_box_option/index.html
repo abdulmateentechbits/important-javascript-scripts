@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Input filed</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <body>
+      <section id="form-wrapper">
+        <form id="demo-form" method="post">
+          <div class="form-header">
+            <h1>Create Account</h1>
+          </div>
+
+          <div class="form-body">
+            <div class="row">
+              <div class="input-group">
+                <label for="">Type</label>
+                <select name="type" id="type" onchange="getTypeVal(this.value)">
+                  <option value="" selected>Select Option</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="">Sub type</label>
+                <select name="sub_type" id="sub_type">
+                  <option selected value="">Select Option</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <button class="btn" type="button" onclick="submitForm()">
+              Create
+            </button>
+          </div>
+        </form>
+      </section>
+    </body>
+  </body>
+  <script>
+    const todoOptions = {
+      leadTypes: ["meetings", "calls", "email", "sales", "acquisition"],
+      meetings: [
+        "followed_up",
+        "meeting_(done)",
+        "video_meeting",
+        "walk_in",
+        "meeting_(arranged)",
+        "meeting_pushed",
+        "meeting_(attempt)",
+      ],
+      calls: ["sms", "contacted_client", "call_attempt", "followed_up"],
+      email: ["contacted_client", "followed_up"],
+      sales: [
+        "followed_up",
+        "token_received",
+        "partial_down_payment",
+        "down_payment",
+        "booking_form",
+        "sale_agreement",
+        "closed_(won)",
+        "closed_(lost)",
+        "contract_cancelled",
+      ],
+      acquisition: ["verification", "commission"],
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const typeSelectBox = document.querySelector("#type");
+
+      todoOptions?.leadTypes.forEach((todoOption) => {
+        const createOptionElement = document.createElement("option");
+        createOptionElement.value = todoOption;
+        createOptionElement.label =
+          todoOption[0].toUpperCase() + todoOption.slice(1);
+        typeSelectBox.appendChild(createOptionElement);
+      });
+    });
+
+    function getTypeVal(val) {
+      const childOptions = todoOptions[val];
+      var childSelect = document.getElementById("sub_type");
+      childSelect.innerHTML = "";
+
+      childOptions.forEach((childOption) => {
+        let createOptionElement = document.createElement("option");
+        createOptionElement.value = childOption;
+        createOptionElement.label = childOption;
+        childSelect.appendChild(createOptionElement);
+      });
+    }
+
+    // submit data
+    function submitForm() {
+      var form = document.getElementById("demo-form");
+
+      // Create a new FormData object from the form
+      var formData = new FormData(form);
+      var data = {};
+      for (var [name, value] of formData.entries()) {
+        data[name] = value;
+      }
+      // Log the form data object to the console
+      console.log(data);
+      
+    }
+  </script>
+</html>
